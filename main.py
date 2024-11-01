@@ -42,6 +42,13 @@ def find_faceboxes(image, results, confidence_threshold):
 
 def draw_age_gender_emotion(face_boxes, image):
     EMOTION_NAMES = ['Neutral', 'Happy', 'Sad', 'Surprise', 'Anger']
+    EMOTION_EMOJIS = {
+        'Neutral': '😐', 
+        'Happy': '😊', 
+        'Sad': '😢', 
+        'Surprise': '😮', 
+        'Anger': '😠'
+    }
     show_image = image.copy()
     recommendations = []  # Store recommendations to display later
 
@@ -55,6 +62,7 @@ def draw_age_gender_emotion(face_boxes, image):
         results_emo = results_emo.squeeze()
         index = np.argmax(results_emo)
         emotion_label = EMOTION_NAMES[index]
+        emotion_label_with_emoji = f"{emotion_label} {EMOTION_EMOJIS.get(emotion_label, '')}"
 
         # --- Age and Gender ---
         input_image_ag = logic.preprocess(face, input_layer_ag)
@@ -71,7 +79,7 @@ def draw_age_gender_emotion(face_boxes, image):
 
         # Get recommendations
         recs = logic.recommend_menu(age, gender, emotion_label)
-        recommendations.append((gender, age, emotion_label, recs))
+        recommendations.append((gender, age, emotion_label_with_emoji, recs))
 
         # Draw rectangle around the face
         cv2.rectangle(show_image, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)
@@ -108,10 +116,10 @@ if image_file is not None:
 
     # Display recommendations below the image
     if recommendations:
-        for gender, age, emotion, recs in recommendations:
+        for gender, age, emotion_with_emoji, recs in recommendations:
             st.write(f"Gender: {gender}")
             st.write(f"Age: {age}")
-            st.write(f"Emotion: {emotion}")
+            st.write(f"Emotion: {emotion_with_emoji}")
             st.write(f"Recommendations: {', '.join(recs)}")
     else:
         st.write("No faces detected.")
