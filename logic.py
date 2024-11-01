@@ -86,4 +86,3 @@ def preprocess(image, input_layer):
     transposed_image = resized_image.transpose(2, 0, 1)
     input_image = np.expand_dims(transposed_image, 0)
     return input_image
-    
