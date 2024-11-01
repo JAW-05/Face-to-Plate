@@ -2,7 +2,6 @@ import openvino as ov
 import cv2
 import numpy as np
 import streamlit as st
-import time
 import logic
 
 # Load models
@@ -86,12 +85,6 @@ def predict_image(image, conf_threshold):
     visualize_image, recommendations = draw_age_gender_emotion(face_boxes, image)
     return visualize_image, recommendations
 
-def take_picture():
-    camera = cv2.VideoCapture(0)
-    ret, frame = camera.read()
-    camera.release()
-    return frame if ret else None
-
 # Streamlit app setup
 st.set_page_config(
     page_title="Swensen's Menu Recommendation Kiosk 👨‍🍳",
@@ -102,28 +95,23 @@ st.set_page_config(
 
 st.title("Swensen's Menu Recommendation Kiosk 👨‍🍳")
 
-# Move the button under the title
-if st.button("Capture Photo"):
-    st.write("Preparing to take your photo...")
-    
-    # Countdown before capturing the picture
-    for i in range(3, 0, -1):
-        st.write(f"Taking picture in {i}...")
-        time.sleep(1)
+# Use st.camera_input to capture photo
+image_file = st.camera_input("Capture Photo")
 
-    image = take_picture()
-    if image is not None:
-        visualized_image, recommendations = predict_image(image, CONFIDENCE_THRESHOLD)
-        st.image(visualized_image, channels="BGR")
+if image_file is not None:
+    # Convert the image to an OpenCV format
+    image = np.array(cv2.imdecode(np.frombuffer(image_file.read(), np.uint8), cv2.IMREAD_COLOR))
 
-        # Display recommendations below the image
-        if recommendations:
-            for gender, age, emotion, recs in recommendations:
-                st.write(f"Gender: {gender}")
-                st.write(f"Age: {age}")
-                st.write(f"Emotion: {emotion}")
-                st.write(f"Recommendations: {', '.join(recs)}")
-        else:
-            st.write("No faces detected.")
+    # Run prediction
+    visualized_image, recommendations = predict_image(image, CONFIDENCE_THRESHOLD)
+    st.image(visualized_image, channels="BGR")
+
+    # Display recommendations below the image
+    if recommendations:
+        for gender, age, emotion, recs in recommendations:
+            st.write(f"Gender: {gender}")
+            st.write(f"Age: {age}")
+            st.write(f"Emotion: {emotion}")
+            st.write(f"Recommendations: {', '.join(recs)}")
     else:
-        st.error("Failed to capture image. Please try again.")
+        st.write("No faces detected.")
