@@ -1,20 +1,22 @@
-# 🍽️ Face-to-Plate
-Face-to-Plate is an AI-powered food recommendation system that suggests suitable meals based on the user’s age, gender, and emotional expression detected from a webcam photo.
-It leverages OpenVINO™ for efficient AI model inference and was developed for my Entrepreneurship project under the Higher Nitec in AI Applications course at ITE College West.
+🍽️ Face-to-Plate
 
-## 🎯 Project Objective
-To demonstrate how AI can be used to create a personalized food experience, while exploring how deep learning and real-time inference can drive innovation in tech-based startups.
+Face-to-Plate is an AI-powered food recommendation system that suggests suitable meals based on the user’s age, gender, and emotional expression detected through a webcam photo.
 
-## 🧠 Features
-👁️ Face detection using OpenVINO
+It leverages OpenVINO™ for efficient real-time model inference and was developed as part of my Entrepreneurship project for the Higher Nitec in AI Applications course at ITE College West.
 
-🍱 Recommends food based on user’s age, gender, and emotion
+⸻
 
-🧪 Web interface built using Streamlit
+🎯 Project Objective
 
+To explore how AI and computer vision can be used to create personalized food experiences, while demonstrating how deep learning can be applied in real-world, startup-ready solutions.
 
+⸻
 
+🧠 Features
+	•	👁️ Face detection and analysis using OpenVINO
+	•	🍱 Personalized food recommendations based on age, gender, and emotion
+	•	🧪 User-friendly web interface built with Streamlit
 
+⸻
 
-
-🧑‍💻 Developed by Jeryann Tan
+Developed by Jeryann Tan
