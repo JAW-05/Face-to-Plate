@@ -13,4 +13,8 @@ To demonstrate how AI can be used to create a personalized food experience, whil
 🧪 Web interface built using Streamlit
 
 
+
+
+
+
 🧑‍💻 Developed by Jeryann Tan
